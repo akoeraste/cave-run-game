@@ -88,8 +88,9 @@ Cave Run/
 │   └── main.cpp                       # Program entry point
 │
 ├── docs/
-│   ├── ooad work.pdf                  # Assignment documentation
-│   └── OOADP CAVE RUN GAME docs.pdf   # Project document
+│   ├── OOADP Assignment.pdf           # Assignment documentation
+│   ├── OOADP Document.docs            # Project document
+│   └── OOADP Document.pdf             # Project document
 │
 ├── starting.md                        # Implementation guide
 └── README.md                          # This file
@@ -653,8 +654,8 @@ This is an educational project. Suggestions for improvements are welcome:
 
 ### Documentation Files
 
-- `docs/ooad work.pdf`: Original assignment requirements and specifications
-- `docs/OOADP CAVE RUN GAME docs.pdf`: Detailed project documentation
+- `docs/ooad Assignment.pdf`: Original assignment requirements and specifications
+- `docs/OOADP Document.pdf`: Detailed project documentation
 - `starting.md`: Implementation guide and code structure
 
 ### Recommended Reading
