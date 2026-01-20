@@ -1,5 +1,4 @@
 # Cave Run Game
-<img width="702" height="594" alt="image" src="https://github.com/user-attachments/assets/a6abc1c6-1c6f-4746-a514-213cf35c9eba" />
 
 ## 📖 Project Overview
 
@@ -212,6 +211,9 @@ M = Monster (red in GUI versions)
 **Note**: In the console version, 'P' appears as both the Player symbol and Poison Room symbol. The context (whether M or other symbols are nearby) helps distinguish them.
 
 ---
+
+<img width="702" height="594" alt="image" src="https://github.com/user-attachments/assets/a6abc1c6-1c6f-4746-a514-213cf35c9eba" />
+
 
 ## 🎲 Game Mechanics
 
