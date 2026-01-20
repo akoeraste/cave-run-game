@@ -1,0 +1,24 @@
+# depslib dependency file v1.0
+1768939754 source:d:\school\crgame\main.cpp
+	"headers/Game.h"
+
+1768938384 d:\school\crgame\headers\game.h
+	"Map.h"
+	"Player.h"
+	"Monster.h"
+
+1768881498 d:\school\crgame\headers\map.h
+	<vector>
+	"Position.h"
+
+1768881461 d:\school\crgame\headers\position.h
+
+1768938384 d:\school\crgame\headers\player.h
+	"Character.h"
+
+1768881480 d:\school\crgame\headers\character.h
+	"Position.h"
+
+1768881490 d:\school\crgame\headers\monster.h
+	"Character.h"
+
