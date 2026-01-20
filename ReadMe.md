@@ -1,4 +1,5 @@
 # Cave Run Game
+<img width="702" height="594" alt="image" src="https://github.com/user-attachments/assets/a6abc1c6-1c6f-4746-a514-213cf35c9eba" />
 
 ## 📖 Project Overview
 
