@@ -2,14 +2,25 @@
 #include "../headers/Player.h"
 
 TrapRoom::TrapRoom(const Position& pos, int dmg)
-    : Room(pos), damageAmount(dmg) {}
+    : Room(pos), damageAmount(dmg) {
+    setColor("red");
+    setLabel("Trap");
+}
+
+std::string TrapRoom::getType() const {
+    return "TrapRoom";
+}
+
+int TrapRoom::getDamage() const {
+    return damageAmount;
+}
 
 char TrapRoom::getSymbol() const {
-    return visited ? 'T' : '?';  // T for trap (red) after discovery
+    return visited ? 'T' : '.';  // Show as safe until discovered, then T for trap
 }
 
 void TrapRoom::visit(Player& player) {
     player.damage(damageAmount);
-    player.setRemainingMoves(0);   // end turn
+    player.setMoves(0);   // end turn
     markVisited();
 }

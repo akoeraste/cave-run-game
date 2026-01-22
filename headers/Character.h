@@ -5,12 +5,14 @@
 
 class Game;
 class Map;
+class Room;
 
 class Character {
 protected:
     Position position;
-    int remainingMoves;
-    int maxMovesPerTurn;
+    Room* currentRoom;
+    int movesRemaining;
+    int maxMoves;
 
 public:
     Character(const Position& startPos, int movesPerTurn);
@@ -18,17 +20,19 @@ public:
 
     const Position& getPosition() const;
     void setPosition(const Position& pos);
+    
+    void setRoom(Room* room);
+    Room* getRoom() const;
 
+    void setMoves(int m);
+    int getMoves() const;
     void resetMoves();
     bool hasMovesLeft() const;
-    int getRemainingMoves() const;
-    void setRemainingMoves(int moves);
 
     virtual void sense(const Game& game) = 0;
-    virtual Position decideMove(const Game& game) = 0;
+    virtual Position getDirection() = 0;
+    virtual void move(const Map& map) = 0;
     virtual void update() {}  // default no-op
-
-    void move(const Position& target, const Map& map);
 };
 
 #endif
