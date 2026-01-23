@@ -3,6 +3,8 @@
 #include "../headers/TrapRoom.h"
 #include "../headers/Character.h"
 #include <iostream>
+#include <thread>
+#include <chrono>
 
 #ifdef _WIN32
 #include <windows.h>
@@ -46,7 +48,6 @@ bool Game::playerWins() const {
 }
 
 void Game::playerTurn() {
-    player.resetMoves();
     while (!gameOver && player.hasMovesLeft()) {
         std::cout << "Enter your move (W/A/S/D): ";
         char move;
@@ -128,6 +129,10 @@ void Game::monsterTurn() {
     monster.resetMoves();
     if (gameOver) return;
 
+    std::cout << "\nMonster is thinking...\n";
+    std::cout.flush();
+    std::this_thread::sleep_for(std::chrono::seconds(2));
+
     monster.sense(*this);
     monster.move(map);
 
@@ -161,6 +166,8 @@ void Game::checkGameOver() {
 
 void Game::run() {
     while (!gameOver) {
+        // Ensure UI shows fresh moves at the start of the player's turn.
+        player.resetMoves();
         displayMap();
         playerTurn();
         if (gameOver) break;
@@ -259,6 +266,10 @@ void Game::displayMap() const {
     std::cout << "Health: " << player.getHealth() << "/100";
     if (player.isPoisoned()) {
         std::cout << " [POISONED]";
+    }
+    {
+        std::string msg = player.consumeUiMessage();
+        if (!msg.empty()) std::cout << msg;
     }
     std::cout << "\n";
     

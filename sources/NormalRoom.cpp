@@ -26,15 +26,17 @@ void NormalRoom::visit(Player& player) {
         
         player.heal(healthToRestore);
         int actualHealthRestored = player.getHealth() - currentHealth;
-        
-        // Show health restoration message
-        std::cout << "Health pickup! +" << actualHealthRestored << " HP (Health: " << currentHealth 
-                  << "/100 -> " << player.getHealth() << "/100)\n";
-        
+
         // If player was poisoned, cure them
         if (wasPoisoned) {
             player.cure();
-            std::cout << "You have been cured! Poison removed.\n";
+        }
+
+        // Show message near Health in STATUS (one-shot)
+        if (wasPoisoned) {
+            player.setUiMessage(" [CURED +" + std::to_string(actualHealthRestored) + "HP]");
+        } else {
+            player.setUiMessage(" [+" + std::to_string(actualHealthRestored) + "HP]");
         }
     }
     

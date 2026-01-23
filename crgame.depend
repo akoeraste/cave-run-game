@@ -41,8 +41,9 @@
 	<vector>
 	"Position.h"
 
-1769110993 d:\dev\cave-run-game\headers\player.h
+1769152699 d:\dev\cave-run-game\headers\player.h
 	"Character.h"
+	<string>
 
 1769061795 d:\dev\cave-run-game\headers\character.h
 	"Position.h"
@@ -61,7 +62,7 @@
 	<string>
 	"Position.h"
 
-1769138883 source:d:\dev\cave-run-game\sources\game.cpp
+1769140678 source:d:\dev\cave-run-game\sources\game.cpp
 	"../headers/Game.h"
 	"../headers/Room.h"
 	"../headers/TrapRoom.h"
@@ -98,7 +99,7 @@
 	"../headers/Map.h"
 	<cmath>
 
-1769138703 source:d:\dev\cave-run-game\sources\normalroom.cpp
+1769152494 source:d:\dev\cave-run-game\sources\normalroom.cpp
 	"../headers/NormalRoom.h"
 	"../headers/Player.h"
 	<iostream>

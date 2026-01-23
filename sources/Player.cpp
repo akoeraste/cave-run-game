@@ -11,7 +11,8 @@ Player::Player(const Position& startPos, int initialHealth)
       poisoned(false),
       poisonDamage(0),
       cureChance(0.2),   // 20% cure chance
-      moveDirection(0, 0) {}
+      moveDirection(0, 0),
+      uiMessage("") {}
 
 int Player::getHealth() const {
     return health;
@@ -57,6 +58,16 @@ void Player::setMoveDirection(const Position& dir) {
 
 Position Player::getDirection() {
     return moveDirection;
+}
+
+void Player::setUiMessage(const std::string& message) {
+    uiMessage = message;
+}
+
+std::string Player::consumeUiMessage() const {
+    std::string msg = uiMessage;
+    uiMessage.clear();
+    return msg;
 }
 
 void Player::sense(const Game& /*game*/) {
