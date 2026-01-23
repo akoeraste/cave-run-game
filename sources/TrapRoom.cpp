@@ -1,5 +1,6 @@
 #include "../headers/TrapRoom.h"
 #include "../headers/Player.h"
+#include <iostream>
 
 TrapRoom::TrapRoom(const Position& pos, int dmg)
     : Room(pos), damageAmount(dmg) {
@@ -16,11 +17,18 @@ int TrapRoom::getDamage() const {
 }
 
 char TrapRoom::getSymbol() const {
-    return visited ? 'T' : '.';  // Show as safe until discovered, then T for trap
+    return visited ? 'T' : '?';  // Show as ? until discovered, then T for trap
 }
 
 void TrapRoom::visit(Player& player) {
-    player.damage(damageAmount);
-    player.setMoves(0);   // end turn
+    if (!visited) {
+        int healthBefore = player.getHealth();
+        player.damage(damageAmount);
+        int healthAfter = player.getHealth();
+        player.setMoves(0);   // end turn
+        
+        std::cout << "It's a trap! -" << damageAmount << " HP (Health: " << healthBefore 
+                  << "/100 -> " << healthAfter << "/100)\n";
+    }
     markVisited();
 }

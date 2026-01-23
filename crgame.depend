@@ -22,3 +22,105 @@
 1768881490 d:\school\crgame\headers\monster.h
 	"Character.h"
 
+1768939564 source:d:\dev\cave-run-game\sources\position.cpp
+	"../headers/Position.h"
+	<cmath>
+
+1768881461 d:\dev\cave-run-game\headers\position.h
+
+1769138742 source:d:\dev\cave-run-game\main.cpp
+	"headers/Game.h"
+	<iostream>
+
+1769061776 d:\dev\cave-run-game\headers\game.h
+	"Map.h"
+	"Player.h"
+	"Monster.h"
+
+1769061776 d:\dev\cave-run-game\headers\map.h
+	<vector>
+	"Position.h"
+
+1769110993 d:\dev\cave-run-game\headers\player.h
+	"Character.h"
+
+1769061795 d:\dev\cave-run-game\headers\character.h
+	"Position.h"
+
+1769062739 d:\dev\cave-run-game\headers\healthstatus.h
+
+1769061776 d:\dev\cave-run-game\headers\monster.h
+	"Character.h"
+
+1769061776 source:d:\dev\cave-run-game\sources\character.cpp
+	"../headers/Character.h"
+	"../headers/Map.h"
+	"../headers/Room.h"
+
+1769061776 d:\dev\cave-run-game\headers\room.h
+	<string>
+	"Position.h"
+
+1769138883 source:d:\dev\cave-run-game\sources\game.cpp
+	"../headers/Game.h"
+	"../headers/Room.h"
+	"../headers/TrapRoom.h"
+	"../headers/Character.h"
+	<iostream>
+	<windows.h>
+	<cstdlib>
+
+1769061776 d:\dev\cave-run-game\headers\traproom.h
+	<string>
+	"Room.h"
+
+1769111208 source:d:\dev\cave-run-game\sources\map.cpp
+	"../headers/Map.h"
+	"../headers/Room.h"
+	"../headers/NormalRoom.h"
+	"../headers/PoisonRoom.h"
+	"../headers/TrapRoom.h"
+	<random>
+	<ctime>
+	<iostream>
+
+1769110737 d:\dev\cave-run-game\headers\normalroom.h
+	<string>
+	"Room.h"
+
+1769061776 d:\dev\cave-run-game\headers\poisonroom.h
+	<string>
+	"Room.h"
+
+1769061776 source:d:\dev\cave-run-game\sources\monster.cpp
+	"../headers/Monster.h"
+	"../headers/Game.h"
+	"../headers/Map.h"
+	<cmath>
+
+1769138703 source:d:\dev\cave-run-game\sources\normalroom.cpp
+	"../headers/NormalRoom.h"
+	"../headers/Player.h"
+	<iostream>
+
+1769138703 source:d:\dev\cave-run-game\sources\poisonroom.cpp
+	"../headers/PoisonRoom.h"
+	"../headers/Player.h"
+	<iostream>
+
+1769061776 source:d:\dev\cave-run-game\sources\room.cpp
+	"../headers/Room.h"
+
+1769138703 source:d:\dev\cave-run-game\sources\traproom.cpp
+	"../headers/TrapRoom.h"
+	"../headers/Player.h"
+	<iostream>
+
+1769110993 source:d:\dev\cave-run-game\sources\player.cpp
+	"../headers/Player.h"
+	"../headers/Game.h"
+	"../headers/Map.h"
+	"../headers/Room.h"
+	<iostream>
+	<cstdlib>
+

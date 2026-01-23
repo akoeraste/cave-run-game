@@ -2,11 +2,11 @@
 #define PLAYER_H
 
 #include "Character.h"
-#include "HealthStatus.h"
 
 class Player : public Character {
 private:
-    HealthStatus healthStatus;
+    int health;
+    bool poisoned;
     int poisonDamage;
     double cureChance;
     Position moveDirection;

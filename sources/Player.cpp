@@ -1,42 +1,46 @@
 #include "../headers/Player.h"
 #include "../headers/Game.h"
 #include "../headers/Map.h"
+#include "../headers/Room.h"
 #include <iostream>
 #include <cstdlib>
 
 Player::Player(const Position& startPos, int initialHealth)
     : Character(startPos, 2),   // 2 moves per turn
-      healthStatus(initialHealth),
+      health(initialHealth),
+      poisoned(false),
       poisonDamage(0),
       cureChance(0.2),   // 20% cure chance
       moveDirection(0, 0) {}
 
 int Player::getHealth() const {
-    return healthStatus.getHealth();
+    return health;
 }
 
 void Player::damage(int amount) {
-    healthStatus.damage(amount);
+    health -= amount;
+    if (health < 0) health = 0;
 }
 
 void Player::heal(int amount) {
-    healthStatus.heal(amount);
+    health += amount;
+    if (health > 100) health = 100;  // Cap at 100
 }
 
 bool Player::isAlive() const {
-    return !healthStatus.isDead();
+    return health > 0;
 }
 
 bool Player::isDead() const {
-    return healthStatus.isDead();
+    return health <= 0;
 }
 
 void Player::setPoisoned(bool flag) {
-    healthStatus.setPoisoned(flag);
+    poisoned = flag;
 }
 
 bool Player::isPoisoned() const {
-    return healthStatus.isPoisoned();
+    return poisoned;
 }
 
 void Player::setPoisonDamage(int dmg) {
@@ -44,7 +48,7 @@ void Player::setPoisonDamage(int dmg) {
 }
 
 void Player::cure() {
-    healthStatus.setPoisoned(false);
+    poisoned = false;
 }
 
 void Player::setMoveDirection(const Position& dir) {
@@ -81,8 +85,8 @@ void Player::move(const Map& map) {
 }
 
 void Player::update() {
-    if (healthStatus.isPoisoned() && isAlive()) {
-        healthStatus.damage(poisonDamage);
+    if (poisoned && isAlive()) {
+        damage(poisonDamage);
         // simple cure chance
         double r = (double) std::rand() / RAND_MAX;
         if (r < cureChance) {

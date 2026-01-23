@@ -1,7 +1,6 @@
 #include "../headers/Game.h"
 #include "../headers/Room.h"
 #include "../headers/TrapRoom.h"
-#include "../headers/HealthRoom.h"
 #include "../headers/Character.h"
 #include <iostream>
 
@@ -26,6 +25,8 @@ void Game::start() {
     monster.setPosition(map.getExitPosition());
     player.resetMoves();
     monster.resetMoves();
+    player.cure();  // Clear poison status and any status flags
+    player.setPoisonDamage(0);  // Reset poison damage
     activeCharacter = &player;
     gameOver = false;
     playerWon = false;
@@ -47,8 +48,7 @@ bool Game::playerWins() const {
 void Game::playerTurn() {
     player.resetMoves();
     while (!gameOver && player.hasMovesLeft()) {
-        std::cout << "\nMoves left: " << player.getMoves() << "\n";
-        std::cout << "Enter move (W/A/S/D): ";
+        std::cout << "Enter your move (W/A/S/D): ";
         char move;
         std::cin >> move;
         std::cin.ignore(1000, '\n');  // Clear input buffer
@@ -97,23 +97,24 @@ void Game::playerTurn() {
             
             // Show message if entering a special room for the first time
             // Note: room->visit() is called inside player.move(), so room is now visited
-            // HealthRoom messages are handled inside visit() method
+            // Health powerup messages are handled inside NormalRoom::visit() method
             if (currentRoom && wasUnvisited) {
                 if (currentRoom->getType() == "TrapRoom") {
-                    std::cout << "*** TRAP! You took " << dynamic_cast<TrapRoom*>(currentRoom)->getDamage() 
-                              << " damage and your turn ended! ***\n";
+                    std::cout << "It's a trap! -" << dynamic_cast<TrapRoom*>(currentRoom)->getDamage() 
+                              << " HP\n";
                 } else if (currentRoom->getType() == "PoisonRoom") {
-                    std::cout << "*** POISON! You've been poisoned! ***\n";
+                    std::cout << "You've been poisoned!\n";
                 }
-                // HealthRoom messages are displayed in visit() method
+                // Health powerup messages are displayed in NormalRoom::visit() method
             }
         }
         
         player.update();
 
         // Show poison damage if poisoned
-        if (player.isPoisoned()) {
-            std::cout << "You suffer from poison damage!\n";
+        if (player.isPoisoned() && !gameOver) {
+            int healthAfterPoison = player.getHealth();
+            std::cout << "Poison effect: -5 HP (Health: " << healthAfterPoison << "/100)\n";
         }
 
         checkGameOver();
@@ -201,11 +202,23 @@ void Game::displayMap() const {
     system("clear");
 #endif
 
+    // Game Title
+    std::cout << "\n";
+    std::cout << "=== CAVE RUN GAME ===\n";
+    std::cout << "\n";
+
     int w = map.getWidth();
     int h = map.getHeight();
 
-    // Draw map
+    // Draw map with coordinates
+    std::cout << "    ";
+    for (int x = 0; x < w; ++x) {
+        std::cout << x << " ";
+    }
+    std::cout << "\n";
+
     for (int y = h - 1; y >= 0; --y) {
+        std::cout << y << "  ";
         for (int x = 0; x < w; ++x) {
             Position pos(x, y);
 
@@ -213,6 +226,8 @@ void Game::displayMap() const {
                 std::cout << 'A';
             else if (monster.getPosition().x == x && monster.getPosition().y == y)
                 std::cout << 'M';
+            else if (pos.x == map.getExitPosition().x && pos.y == map.getExitPosition().y)
+                std::cout << 'E';
             else {
                 Room* room = map.getRoom(pos);
                 if (room) {
@@ -223,27 +238,39 @@ void Game::displayMap() const {
             }
             std::cout << ' ';
         }
-        std::cout << '\n';
+        std::cout << "\n";
     }
 
-    // Display game info
-    std::cout << "\n=== Game Status ===\n";
-    std::cout << "Turn: " << turnCount << "\n";
+    std::cout << "\n";
+
+    // Legend
+    std::cout << "Legend:\n";
+    std::cout << "A = Player\n";
+    std::cout << "M = Monster\n";
+    std::cout << "E = Exit\n";
+    std::cout << ". = Normal\n";
+    std::cout << "? = Unknown\n";
+    std::cout << "T = Trap\n";
+    std::cout << "P = Poison (visited)\n";
+    std::cout << "\n";
+
+    // Status Information
+    std::cout << "STATUS:\n";
     std::cout << "Health: " << player.getHealth() << "/100";
     if (player.isPoisoned()) {
         std::cout << " [POISONED]";
     }
     std::cout << "\n";
+    
+    std::cout << "Moves Remaining: " << player.getMoves() << "/2\n";
 
     // Calculate distances
     int distToExit = player.getPosition().distanceTo(map.getExitPosition());
     int distToMonster = player.getPosition().distanceTo(monster.getPosition());
     
-    std::cout << "Distance to Exit: " << distToExit << "\n";
-    std::cout << "Distance to Monster: " << distToMonster << "\n";
-    
-    // Legend
-    std::cout << "\nLegend: A=Player, M=Monster, .=Unvisited/Safe, T=Trap (discovered), P=Poison (discovered), H=Health (discovered)\n";
+    std::cout << "Distance to Exit: " << distToExit << " steps\n";
+    std::cout << "Monster Distance: " << distToMonster << " steps\n";
+    std::cout << "\n";
 }
 
 void Game::displayGameOver() const {

@@ -3,7 +3,6 @@
 #include "../headers/NormalRoom.h"
 #include "../headers/PoisonRoom.h"
 #include "../headers/TrapRoom.h"
-#include "../headers/HealthRoom.h"
 #include <random>
 #include <ctime>
 #include <iostream>
@@ -23,7 +22,6 @@ void Map::initialize() {
     // Random room generation with seed for reproducibility
     static std::mt19937 rng(static_cast<unsigned int>(std::time(nullptr)));
     std::uniform_real_distribution<double> dist(0.0, 1.0);
-    std::uniform_int_distribution<int> healthPercentDist(1, 5);
 
     Position startPos(0, 0);
 
@@ -35,19 +33,17 @@ void Map::initialize() {
                 (pos.x == exitPosition.x && pos.y == exitPosition.y)) {
                 rooms[y][x] = new NormalRoom(pos);
             } else {
-                // Random distribution: 20% poison, 20% trap, 10% health, 50% normal
+                // Random distribution: 20% poison, 20% trap, 60% normal
                 double roll = dist(rng);
                 if (roll < 0.20) {
                     rooms[y][x] = new PoisonRoom(pos, 5);
                 } else if (roll < 0.40) {
                     rooms[y][x] = new TrapRoom(pos, 20);
-                } else if (roll < 0.50) {
-                    // Random health percentage: 10%, 15%, 20%, 25%, or 30%
-                    int healthPercentRoll = healthPercentDist(rng);
-                    int healthPercentage = healthPercentRoll * 5 + 5;  // 10, 15, 20, 25, or 30
-                    rooms[y][x] = new HealthRoom(pos, healthPercentage);
                 } else {
-                    rooms[y][x] = new NormalRoom(pos);
+                    // Normal rooms: 10% of normal rooms have health powerups
+                    double healthRoll = dist(rng);
+                    bool hasHealthPowerup = (healthRoll < 0.10);  // 10% of normal rooms
+                    rooms[y][x] = new NormalRoom(pos, hasHealthPowerup, 20);  // 20% health restoration
                 }
             }
         }
